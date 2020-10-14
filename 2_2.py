@@ -20,9 +20,7 @@ def text_analysis(text, maxlen, forbidden_words):
 
     pure_short_text = ''
     if len(text) > maxlen:
-        for i in range(maxlen):
-            pure_short_text += text[i]
-        pure_short_text += '...'
+        pure_short_text = text[:maxlen] + '...'
     else:
         pure_short_text = text
     result.update([('pure_short_text', pure_short_text)])
