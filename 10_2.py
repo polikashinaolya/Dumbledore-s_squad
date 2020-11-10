@@ -1,23 +1,16 @@
-def transformation(time):
-    time = time.split(':')
-    if len(time) != 2:
-        raise Exception('BadFormatException: Число нужно написать в формате ХХ:ХХ')
-    try:
-        hour = int(time[0])
-        minute = int(time[1])
-        return hour, minute
-    except ValueError:
-        print('Время должно быть представлено двумя числами через : , где первое число - часы, второе - минуты')
+class Clock_Exception(Exception):
+
+    def __init__(self, text):
+        self.text = text
+
+    def __repr__(self):
+        return self.text
 
 
 class Clock:
     def __init__(self, hour, minute):
         self.hour = hour
         self.minute = minute
-        if 0 > self.hour > 24:
-            raise Exception('BadHourException: часы определяются промежутком от 0 до 23')
-        if 0 > self.minute > 60:
-            raise Exception('BadMinutesException: минуты определяются промежутком от 0 до 59')
 
     def __repr__(self):
         if self.hour in [1, 21]:
@@ -29,6 +22,25 @@ class Clock:
 
     def in_minute(self):
         return self.hour * 60 + self.minute
+
+
+def transformation(time):
+    try:
+        time = time.split(':')
+        if len(time) != 2:
+            raise Clock_Exception('BadFormatException: Число нужно написать в формате ХХ:ХХ')
+        hour = int(time[0])
+        minute = int(time[1])
+        if hour > 23 or hour < 0:
+            raise Clock_Exception('BadHourException: часы определяются промежутком от 0 до 23')
+        if minute > 60 or minute < 0:
+            raise Clock_Exception('BadMinutesException: минуты определяются промежутком от 0 до 59')
+    except ValueError:
+        print('Время должно быть представлено двумя числами через : , где первое число - часы, второе - минуты')
+    except Clock_Exception as CE:
+        print(CE)
+    else:
+        return hour, minute
 
 
 time_1 = transformation(input())
