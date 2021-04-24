@@ -1,5 +1,6 @@
 import json5
 
+
 def text_analysis(text, maxlen, forbidden_words):
     result = {}
     result.update([('length', len(text))])
@@ -27,6 +28,7 @@ def text_analysis(text, maxlen, forbidden_words):
 
     with open('result.json', 'w') as json:
         json5.dump(result, json)
+
 
 text_i = input()
 maxlen_i = int(input())

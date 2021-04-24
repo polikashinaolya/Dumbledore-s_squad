@@ -11,8 +11,9 @@ class Residents:
         self.age = age
         self.is_teen = is_teen
 
-    def from_one_county(self, county):
-        return self.county == county
+    def __repr__(self):
+        return 'номер: %s, имя: %s, пол: %s, страна: %s, возраст: %s, совершеннолетие: %s' % \
+               (self.id, self.name, self.fname, self.county, self.age, self.is_teen)
 
     def same_age(self, age):
         return self.age == age
@@ -33,16 +34,18 @@ class Residents:
         return self.underage() == self.is_teen
 
 
+def user(basa):
+    for human in basa:
+        Human = Residents(human.get('id'), human.get('name'), human.get('fname'), human.get('county'), human.get('age'), human.get('is_teen'))
+        return Human
+
+
 with open('users_ds.json', 'r') as basa:
     users_basa = json.load(basa)
 
 print('Введите нужную Страну')
-county_split = input()
-for user in users_basa:
-    human = Residents(user.get('id'), user.get('name'), user.get('fname'), user.get('county'), user.get('age'),
-                      user.get('is_teen'))
-    if human.from_one_county(county_split):
-        print(user)
+if user(users_basa).county == input():
+    print('jhkh')
 
 print('Введите возраст, чтобы найти всех с таким возрастом')
 age_split = int(input())
